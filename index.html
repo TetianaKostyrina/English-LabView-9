@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vocabulary Trainer</title>
+  <link rel="stylesheet" href="style.css?v=4" />
+</head>
+<body>
+  <canvas id="fxCanvas" class="fxCanvas" aria-hidden="true"></canvas>
+
+  <div id="scoreModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="scoreTitle">
+    <div class="modalCard">
+      <h2 id="scoreTitle">Готово!</h2>
+      <div id="scoreText" class="scoreText"></div>
+      <div class="modalActions">
+        <button id="btnCloseScore" class="primary">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="top">
+    <div class="title">
+      <h1>Тренажёр слов (RU ↔ EN)</h1>
+      <p>4 задания + озвучка (Wiktionary/Commons, fallback: голос браузера)</p>
+    </div>
+
+    <div class="controls">
+      <button id="btnShuffle" class="primary">Перемешать</button>
+      <span id="status" class="status"></span>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Режимы">
+    <button class="tab active" data-tab="cards" role="tab" aria-selected="true">1) Выбор слова (RU → EN)</button>
+    <button class="tab" data-tab="mcq" role="tab" aria-selected="false">2) Выбор перевода</button>
+    <button class="tab" data-tab="typing" role="tab" aria-selected="false">3) Ввод слова</button>
+    <button class="tab" data-tab="match" role="tab" aria-selected="false">4) Соответствия</button>
+  </nav>
+
+  <main class="container">
+    <!-- Карточки -->
+    <section id="cards" class="panel active" role="tabpanel">
+<div class="card">
+  <div class="row">
+    <div>
+      <div class="label">Выберите английское слово</div>
+      <div id="t1Prompt" class="big"></div>
+      <div id="t1Pron" class="muted"></div>
+    </div>
+    <div class="actions">
+      <button id="btnSpeakT1">🔊 Озвучить</button>
+      <button id="btnT1Next">Следующий</button>
+    </div>
+  </div>
+
+  <div id="t1Options" class="options"></div>
+  <div id="t1Feedback" class="feedback"></div>
+  <div class="muted" id="t1Index"></div>
+</div>
+    </section>
+
+    <!-- MCQ -->
+    <section id="mcq" class="panel" role="tabpanel">
+      <div class="card">
+        <div class="row">
+          <div>
+            <div class="label">Выберите перевод</div>
+            <div id="mcqWord" class="big"></div>
+            <div id="mcqPron" class="muted"></div>
+          </div>
+          <div class="actions">
+            <button id="btnSpeakMcq">🔊 Озвучить</button>
+            <button id="btnMcqNext">Следующий</button>
+          </div>
+        </div>
+
+        <div id="mcqOptions" class="options"></div>
+        <div id="mcqFeedback" class="feedback"></div>
+        <div class="muted" id="mcqIndex"></div>
+      </div>
+    </section>
+
+    <!-- Typing -->
+    <section id="typing" class="panel" role="tabpanel">
+      <div class="card">
+        <div class="row">
+          <div>
+            <div class="label">Введите английское слово</div>
+            <div id="typePrompt" class="big"></div>
+            <div class="muted">Подсказка: слушайте озвучку</div>
+          </div>
+          <div class="actions">
+            <button id="btnSpeakType">🔊 Озвучить</button>
+            <button id="btnTypeNext">Следующий</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <input id="typeInput" class="input" placeholder="Введите слово (EN)..." autocomplete="off" />
+          <button id="btnCheckType" class="primary">Проверить</button>
+        </div>
+
+        <div id="typeFeedback" class="feedback"></div>
+        <div class="muted" id="typeIndex"></div>
+      </div>
+    </section>
+
+    <!-- Matching -->
+    <section id="match" class="panel" role="tabpanel">
+      <div class="card">
+        <div class="row">
+          <div>
+            <div class="label">Сопоставьте пары</div>
+            <div class="muted">Нажмите слово слева, затем перевод справа</div>
+          </div>
+          <div class="actions">
+            <button id="btnResetMatch">Сбросить пары</button>
+          </div>
+        </div>
+
+        <div class="matchGrid">
+          <div>
+            <div class="label2">EN</div>
+            <div id="matchLeft" class="list"></div>
+          </div>
+          <div>
+            <div class="label2">RU</div>
+            <div id="matchRight" class="list"></div>
+          </div>
+        </div>
+
+        <div id="matchFeedback" class="feedback"></div>
+        <div class="muted" id="matchProgress"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer muted">
+    <small>Для GitHub Pages: Settings → Pages → Deploy from branch (main / root).</small>
+  </footer>
+
+  <script src="app.js?v=4"></script>
+</body>
+</html>

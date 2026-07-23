@@ -1,0 +1,237 @@
+:root{
+  --bg: #0b0f16;
+  --card: rgba(18, 26, 38, 0.86);
+  --text: #e7eefc;
+  --muted: rgba(231, 238, 252, 0.78);
+  --border: rgba(34, 49, 75, 0.75);
+  --ok: #2bd576;
+  --bad: #ff5c7c;
+  --accent: #5aa7ff;
+
+  /* задаётся из JS при смене вкладки */
+  --page-bg: url("https://images.hdqwalls.com/download/pastel-abstract-area-4k-gn-1920x1080.jpg");
+}
+
+*{box-sizing:border-box;}
+
+body{
+  position:relative;
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+
+  background-color:var(--bg);
+  background-image:var(--page-bg);
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+
+/* затемнение фона для читаемости */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
+  pointer-events:none;
+  z-index:-1;
+}
+
+.top{
+  display:flex;
+  gap:16px;
+  padding:20px 16px 10px 16px;
+  align-items:flex-start;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  border-bottom:1px solid var(--border);
+  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.18);
+}
+
+.title h1{margin:0 0 6px 0;font-size:26px;}
+.title p{margin:0;color:var(--muted);font-size:16px;line-height:1.25;}
+
+.controls{display:flex;align-items:center;gap:12px;}
+.status{color:var(--muted);font-size:16px;}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  padding:12px 16px;
+  border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.14);
+}
+
+button{
+  border:1px solid var(--border);
+  background: rgba(0,0,0,0.10);
+  color:var(--text);
+  padding:12px 14px;
+  border-radius:14px;
+  cursor:pointer;
+  font-size:18px;
+}
+button:hover{border-color:rgba(90,167,255,0.75);}
+button.primary{background:var(--accent);color:#07101f;border-color:transparent;font-weight:750;}
+.tab.active{border-color:var(--accent);}
+
+.container{padding:18px;max-width:980px;margin:0 auto;}
+.panel{display:none;}
+.panel.active{display:block;}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px;
+  box-shadow:0 14px 40px rgba(0,0,0,0.32);
+  backdrop-filter: blur(8px);
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;}
+
+.label{color:var(--muted);font-size:16px;margin-bottom:8px;}
+.label2{color:var(--muted);font-size:15px;margin:12px 0 10px;}
+
+.big{font-size:38px;font-weight:820;letter-spacing:0.2px;}
+.translation{margin-top:16px;font-size:22px;padding:14px;border-radius:16px;border:1px dashed var(--border);background: rgba(0,0,0,0.12);}
+.hidden{display:none !important;}
+
+/* Если модалка скрыта — не должна перехватывать клики */
+.modal.hidden{display:none !important; pointer-events:none !important;}
+.muted{color:var(--muted);font-size:16px;margin-top:8px;}
+
+.navrow{margin-top:16px;}
+.options{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px;}
+.feedback{margin-top:14px;min-height:26px;font-weight:800;font-size:18px;}
+.feedback.ok{color:var(--ok);}
+.feedback.bad{color:var(--bad);}
+
+.input{
+  width:min(560px,100%);
+  padding:14px 14px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background: rgba(0,0,0,0.20);
+  color:var(--text);
+  font-size:18px;
+}
+
+.matchGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-top:8px;
+}
+@media (max-width:760px){.matchGrid{grid-template-columns:1fr;}}
+
+.list{display:grid;gap:10px;}
+.item{
+  padding:12px 14px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background: rgba(0,0,0,0.10);
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  font-size:18px;
+}
+.item:hover{border-color:rgba(90,167,255,0.75);}
+.item.selected{outline:3px solid rgba(90,167,255,0.85);border-color:transparent;}
+.item.done{opacity:0.60;cursor:default;}
+.item.correct{
+  background: rgba(43,213,118,0.18);
+  border-color: rgba(43,213,118,0.85);
+  opacity:1;
+}
+.item.wrong{
+  background: rgba(255,92,124,0.18);
+  border-color: rgba(255,92,124,0.85);
+  opacity:1;
+  animation: shake 0.28s linear 0s 2;
+}
+
+@keyframes shake{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-4px);}
+  50%{transform:translateX(4px);}
+  75%{transform:translateX(-3px);}
+  100%{transform:translateX(0);}
+}
+
+.badge{color:var(--muted);font-size:14px;}
+
+.footer{
+  padding:16px;
+  border-top:1px solid var(--border);
+  text-align:center;
+  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.12);
+}
+
+/* Fireworks canvas */
+.fxCanvas{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none !important;
+  /* ниже модального окна и интерфейса */
+  z-index:10;
+}
+
+/* Score modal */
+.modal{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(0,0,0,0.55);
+  /* максимально поверх всего (исправляет «ничего не нажимается» на некоторых WebView) */
+  z-index:9999;
+  padding:18px;
+  pointer-events:auto;
+  /* На некоторых Android/WebView размытие/оверлеи могут мешать кликам */
+  touch-action: manipulation;
+}
+.modalCard{
+  width:min(620px, 100%);
+  border-radius:22px;
+  border:1px solid var(--border);
+  background: rgba(18, 26, 38, 0.92);
+  padding:18px;
+  box-shadow:0 18px 60px rgba(0,0,0,0.45);
+  /* Убираем размытие внутри модалки: на части WebView оно иногда ломает клики */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  pointer-events:auto;
+}
+.modalCard h2{
+  margin:0 0 12px 0;
+  font-size:26px;
+}
+.scoreText{
+  font-size:18px;
+  line-height:1.35;
+  color:var(--text);
+}
+.modalActions{
+  margin-top:14px;
+  display:flex;
+  justify-content:flex-end;
+}
